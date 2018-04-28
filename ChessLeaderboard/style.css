@@ -1,0 +1,29 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  background: #ccc;
+  padding: 20px;
+}
+
+.wrapper {
+  height: 600px;
+  width: 800px;
+  margin: 0 auto;
+  border: 2px solid blue;
+  box-shadow: 0 0 10px 2px gray;
+  display: grid;
+  grid-gap: 25px;
+  align-content: center;
+  justify-content: center;
+}
+
+input {
+  width: 60px;
+}
