@@ -22,18 +22,26 @@ $responseElo = @mysqli_query($dbc, $queryElo);
       <?php 
       if ($responseElo) {
         echo '
-        <table id="tableBalance">
+        <table id="players">
           <tr>
             <td><b>id</b></td>
-            <td><b>player</b></td>
+            <td><b>Name</b></td>
             <td><b>ELO</b></td>
+            <td><b>WIN</b></td>
+            <td><b>LOSS</b></td>
+            <td><b>DRAW</b></td>
+            <td><b>GAMES PLAYED</b></td>
           </tr>';
       
         while ($rowB = mysqli_fetch_array($responseElo)) {
           echo '<tr>
           <td>' . $rowB['id'] . '</td>' .
           '<td>' . $rowB['player_name'] . '</td>' .
-          '<td>' . $rowB['elo'] . '</td>';
+          '<td>' . $rowB['elo'] . '</td>' .
+          '<td>' . $rowB['win'] . '</td>' .
+          '<td>' . $rowB['loss'] . '</td>' .
+          '<td>' . $rowB['draw'] . '</td>' .
+          '<td>' . $rowB['games_played'] . '</td>';
           echo '</tr>';
         }
       
@@ -48,37 +56,32 @@ $responseElo = @mysqli_query($dbc, $queryElo);
       ?>
       </div>
       <div class="form">
-        <form action="./handlePlayer" method="post">
+        <form action="./handlePlayer.php" method="post">
           <span>Player Name:</span>
           <br />
-          <input type="text" name="player">
-          <input type="submit" name="submit" value="Enter new player">
+          <input id="newPlayer" type="text" name="player">
+          <input id="newPlayBut" type="submit" name="submit" value="Enter new player">
         </form>
-        <form action="./handleElo" method="post">
+        <form action="./handleElo.php" method="post">
           <span>Select Players</span>
           <br />
-          <select required>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
-          </select>
-          <span>VS</span>
-          <select required>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
+          <span>Winner: </span>
+          <select required id="selectionOne" name="winner">
+            
           </select>
           <br />
-          <span>Select Winner</span>
-          <select required>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="opel">Opel</option>
-            <option value="audi">Audi</option>
+          <span>VS</span>
+          <br />
+          <span>Loser: </span>
+          <select required id="selectionTwo" name="loser">
+            
           </select>
-          <input type="submit" name="submit" value="Submit winner">
+          <br />
+          <select id="game" name="game">
+            <option value="win">WIN</option>
+            <option value="draw">DRAW</option>
+          </select>
+          <input id="gameButton" type="submit" name="submit" value="Submit winner">
         </form>
       </div>
     </div>
