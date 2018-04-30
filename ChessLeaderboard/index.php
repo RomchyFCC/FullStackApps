@@ -11,7 +11,7 @@
 
 require_once('../mysqli_connect.php');
 
-$queryElo = "SELECT * FROM `players`";
+$queryElo = "SELECT * FROM `players` ORDER BY elo DESC";
 
 $responseElo = @mysqli_query($dbc, $queryElo);
 
@@ -22,20 +22,22 @@ $responseElo = @mysqli_query($dbc, $queryElo);
       <?php 
       if ($responseElo) {
         echo '
+        <h1>Elo Rankings</h1>
         <table id="players">
           <tr>
-            <td><b>id</b></td>
+            <td><b>Rank</b></td>
             <td><b>Name</b></td>
             <td><b>ELO</b></td>
-            <td><b>WIN</b></td>
-            <td><b>LOSS</b></td>
-            <td><b>DRAW</b></td>
-            <td><b>GAMES PLAYED</b></td>
+            <td><b>Wins</b></td>
+            <td><b>Losses</b></td>
+            <td><b>Draws</b></td>
+            <td><b>Games Played</b></td>
           </tr>';
-      
+
+        $index = 1;
         while ($rowB = mysqli_fetch_array($responseElo)) {
           echo '<tr>
-          <td>' . $rowB['id'] . '</td>' .
+          <td>' . $index . '</td>' .
           '<td>' . $rowB['player_name'] . '</td>' .
           '<td>' . $rowB['elo'] . '</td>' .
           '<td>' . $rowB['win'] . '</td>' .
@@ -43,6 +45,7 @@ $responseElo = @mysqli_query($dbc, $queryElo);
           '<td>' . $rowB['draw'] . '</td>' .
           '<td>' . $rowB['games_played'] . '</td>';
           echo '</tr>';
+          $index++;
         }
       
         echo '</table>';
@@ -57,31 +60,26 @@ $responseElo = @mysqli_query($dbc, $queryElo);
       </div>
       <div class="form">
         <form action="./handlePlayer.php" method="post">
-          <span>Player Name:</span>
-          <br />
+          <h2>New Player Name</h2>
           <input id="newPlayer" type="text" name="player">
           <input id="newPlayBut" type="submit" name="submit" value="Enter new player">
         </form>
         <form action="./handleElo.php" method="post">
-          <span>Select Players</span>
-          <br />
-          <span>Winner: </span>
+          <h2>New Match</h2>
+          <span>Winner: 
           <select required id="selectionOne" name="winner">
             
-          </select>
-          <br />
+          </select></span>
           <span>VS</span>
-          <br />
-          <span>Loser: </span>
+          <span>Loser: 
           <select required id="selectionTwo" name="loser">
             
-          </select>
-          <br />
-          <select id="game" name="game">
+          </select></span>
+          <span>Match: <select id="game" name="game">
             <option value="win">WIN</option>
             <option value="draw">DRAW</option>
-          </select>
-          <input id="gameButton" type="submit" name="submit" value="Submit winner">
+          </select></span>
+          <input id="gameButton" type="submit" name="submit" value="Submit result">
         </form>
       </div>
     </div>

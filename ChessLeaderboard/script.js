@@ -23,7 +23,9 @@ function checkInput(e) {
   let sameName = false;
   rowValues.forEach(value => {
     if (value[0] === e.target.value) {
-      console.log('Name already exists in the database!');
+      sameName = true;
+    }
+    if (e.target.value.includes(' ')) {
       sameName = true;
     }
   });
